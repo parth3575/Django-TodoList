@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>Login Page </title>
+{% endblock title %}
+
+{% block content %}
+    <h2> Login on TaskMate </h2>
+    <div class="container p-2">
+
+    <br>
+        <form method="POST" class="col-6">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <button type="submit" class="btn btn-primary col-lg-2">Login</button>
+        </form>
+    </div>
+{% endblock content %}

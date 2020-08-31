@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Task page - MySite</title>
+{% endblock title %}
+
+{% block content %}
+    {#<div class="container">#}
+    {#        <h1> {{ welcome_task }} </h1>#}
+    {#</div>#}
+    <br class="container">
+    </br>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <form class="form-row" method="POST">
+        {% csrf_token %}
+        <label class="col-lg-4"> </label>
+        <input type="text" class="form-control col-lg-6" name="task" placeholder="New Task">
+        <button type="submit" class="btn btn-primary col-lg-2">Add Task</button>
+    </form>
+    </br>
+    {#        <h1> {{ all_tasks }} </h1>#}
+    <table class="table table-bordered text-center">
+        <thead class="thead-dark">
+        <tr class="row">
+            <th class="col-7">Task</th>
+            <th class="col-3">Done</th>
+            <th class="col-1">Edit</th>
+            <th class="col-1">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if all_tasks %}
+            {% for obj in all_tasks %}
+                {% if obj.done %}
+                    <tr class="table-success row">
+                        <td class="col-7"><del> {{ obj.task }} </del></td>
+                        <td class="col-3"><a href="{% url 'todolist:task_status' obj.id %}"><button type="button" class="btn btn-success">Mark as Pending</button></a></td>
+                        <td class="col-1"><a href="{% url 'todolist:edit_task' obj.id %}"><button type="button" class="btn btn-warning">Edit</button></a></td>
+                        <td class="col-1"><a href="{% url 'todolist:delete_task' obj.id %}"><button type="button" class="btn btn-danger">Delete</button></a> </td>
+                    </tr>
+                {% else %}
+                    <tr class="row">
+                        <td class="col-7"> {{ obj.task }}</td>
+                        <td class="col-3"> <a href="{% url 'todolist:task_status' obj.id %}"><button type="button" class="btn btn-secondary">Mark as Completed</button></a> </td>
+                        <td class="col-1"><a href="{% url 'todolist:edit_task' obj.id %}"><button type="button" class="btn btn-warning">Edit</button></a></td>
+                        <td class="col-1"><a href="{% url 'todolist:delete_task' obj.id %}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            <li class="page-item">
+                <a class="page-link" href="?pg=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            {% if all_tasks.has_previous %}
+            <li class="page-item"><a class="page-link" href="?pg={{all_tasks.previous_page_number}}">{{all_tasks.previous_page_number}}</a></li>
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="?pg={{all_tasks.number}}">{{all_tasks.number}}</a></li>
+
+            {% if all_tasks.has_next %}
+            <li class="page-item"><a class="page-link" href="?pg={{all_tasks.next_page_number}}">{{all_tasks.next_page_number}}</a></li>
+            {% endif %}
+            <li class="page-item">
+                <a class="page-link" href="?pg={{all_tasks.paginator.num_pages }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    {#        {% for obj in all_tasks %}#}
+    {#            {{ obj.task }} | {{ obj.done }}#}
+    {#            <br>#}
+    {#        {% endfor %}#}
+    </div>
+{% endblock content %}

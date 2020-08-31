@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title> Delete Task - MySite </title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+    <br>
+        {% if task_obj.manage == request.user %}
+        <form class="form-group row" method="POST">
+            {% csrf_token %}
+            {# <label class="col-lg-2"> </label>#}
+            <h3 class="col-lg-10 text-left">Do you want to delete following Task</h3>
+            <h5 class="col-lg-10 text-center"><code>"{{ task_obj.task }}"?</code></h5>
+        <div class = "form-group row">
+            <div class = "col-sm-2 offset-sm-4">
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a href = "{% url 'todolist:task' %}">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                </a>
+            </div>
+        </div>
+        </form>
+        {% else %}
+            <h3>Access is Restricted!!!</h3>
+        {% endif %}
+    </div>
+{% endblock content %}

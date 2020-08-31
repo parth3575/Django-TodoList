@@ -1,0 +1,27 @@
+{%  extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+<title> Registration </title>>
+{% endblock title %}
+
+{% block content %}
+    <h2> Registration </h2>
+    <div class="container p-2">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <br>
+        <form method="POST" class="col-6">
+            {% csrf_token %}
+            {{ registration_form | crispy }}
+            <button type="submit" class="btn btn-primary col-lg-2">Register</button>
+        </form>
+    </div>
+{% endblock content %}+

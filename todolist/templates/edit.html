@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title> Edit Task - MySite </title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+    <br>
+        {% if task_obj.manage == request.user %}
+            <form class="form-row" method="POST">
+                {% csrf_token %}
+                <label class="col-lg-2"> </label>
+                <input type="text" class="form-control col-lg-6" name="task" placeholder="{{ task_obj.task }}" value="{{ task_obj.task }}">
+                <input type="hidden" name="done" value="{{ task_obj.done }}">
+                <button type="submit" class="btn btn-primary col-lg-2">Update Task</button>
+            </form>
+        {% else %}
+            <h3>Access is Restricted!!!</h3>
+        {% endif %}
+    </div>
+{% endblock content %}

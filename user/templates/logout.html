@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>Logout Page </title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container p-2">
+    <h4>Logged out</h4>
+        <p>Thanks for spending some quality time with the Web site today.</p>
+    <br>
+        <a href="{% url 'user:login' %}">
+        <button type="button" class="btn btn-primary col-lg-2">Login</button>
+        </a>
+    </div>
+{% endblock content %}
